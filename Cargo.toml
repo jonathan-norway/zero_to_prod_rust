@@ -3,4 +3,45 @@ name = "zero_to_prod_rust"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name="zero_to_prod_rust"
+
 [dependencies]
+actix-web = "4.10.2"
+cargo-audit = "0.21.2"
+cargo-binutils = "0.3.6"
+cargo-llvm-cov = "0.6.16"
+config = "0.14"
+reqwest = "0.12.15"
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.44.1", features = ["macros", "rt-multi-thread"] }
+
+
+[dependencies.sqlx]
+version = "0.8"
+default-features = false
+features = [
+  "runtime-tokio-rustls",
+  "macros",
+  "postgres",
+  "uuid",
+  "chrono",
+  "migrate"
+]
+
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "ling-arg=-fuse-ld=lld"]
+
+[target.x86_64-pc-windows-gnu]
+rustflags = ["-C", "ling-arg=-fuse-ld=lld"]
+
+# macos brew install llvm -> brew info llvm
+[target.x86_64-apple-darwin]
+rustflags = ["-C", "ling-arg=-fuse-ld=lld"]
+
+[target.aarch64-apple-darwin]
+rustflags = ["-C", "ling-arg=-fuse-ld=/opt/homebrew/opt/llvm/bin/ld54.lld"]
