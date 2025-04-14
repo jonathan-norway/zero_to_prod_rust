@@ -1,7 +1,8 @@
 use std::net::TcpListener;
 
-use actix_web::{App, HttpServer, dev::Server, middleware::Logger, web};
+use actix_web::{App, HttpServer, dev::Server, web};
 use sqlx::PgPool;
+use tracing_actix_web::TracingLogger;
 
 use crate::routes::{greet, health_check, subscribe};
 
@@ -9,7 +10,7 @@ pub fn run(listender: TcpListener, connection_pool: PgPool) -> Result<Server, st
     let connection_pool = web::Data::new(connection_pool);
     let server = HttpServer::new(move || {
         App::new()
-            .wrap(Logger::default())
+            .wrap(TracingLogger::default())
             .route("/", web::get().to(greet))
             .route("/health_check", web::get().to(health_check))
             .route("/subscribe", web::post().to(subscribe))
