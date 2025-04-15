@@ -50,15 +50,9 @@ actix-session = { version = "0.10", features = ["redis-session-rustls"] }
 serde_json = "1"
 
 
-[target.x86_64-pc-windows-msvc]
-rustflags = ["-C", "link-arg=-fuse-ld=lld"]
-
-[target.x86_64-pc-windows-gnu]
-rustflags = ["-C", "link-arg=-fuse-ld=lld"]
-
-# macos brew install llvm -> brew info llvm
-[target.x86_64-apple-darwin]
-rustflags = ["-C", "link-arg=-fuse-ld=lld"]
-
-[target.aarch64-apple-darwin]
-rustflags = ["-C", "link-arg=-fuse-ld=/opt/homebrew/opt/llvm/bin/ld54.lld"]
+[dev-dependencies]
+claims = "0.7"
+fake = "2.9"
+quickcheck = "1.0.3"
+quickcheck_macros = "1"
+rand = "0.8"
